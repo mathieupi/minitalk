@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/28 17:14:28 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/28 17:14:28 by mmehran          ###   ########.fr       */
+/*   Created: 2021/05/28 17:14:55 by mmehran           #+#    #+#             */
+/*   Updated: 2021/05/28 17:14:55 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 void	read_char(int bit)
 {
@@ -32,6 +32,27 @@ void	sighandler(int signum)
 		read_char(1);
 	else if (signum == SIGUSR1)
 		read_char(0);
+
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	char	digit;
+
+	if (n < 0)
+	{
+		write(fd, "-", 1);
+		if (n == -2147483648)
+		{
+			write(1, "2147483648", 10);
+			return ;
+		}
+		n = -n;
+	}
+	if (n > 9)
+		ft_putnbr_fd(n / 10, fd);
+	digit = n % 10 + '0';
+	write(fd, &digit, 1);
 }
 
 int	main(void)
