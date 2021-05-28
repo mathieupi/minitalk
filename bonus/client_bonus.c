@@ -6,11 +6,21 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:40 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 00:49:42 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 00:57:25 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
+
+int	ft_atoi(const char *str)
+{
+	int	result;
+
+	result = 0;
+	while (*str >= '0' && *str <= '9')
+		result = result * 10 + *(str++) - '0';
+	return (result);
+}
 
 void	send_bit(int pid, char bit)
 {
