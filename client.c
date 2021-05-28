@@ -6,11 +6,21 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:33 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/28 17:14:33 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/28 23:51:16 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+int	ft_atoi(const char *str)
+{
+	int	result;
+
+	result = 0;
+	while (*str >= '0' && *str <= '9')
+		result = result * 10 + *(str++) - '0';
+	return (result);
+}
 
 void	send_bit(int pid, char bit)
 {
@@ -18,7 +28,7 @@ void	send_bit(int pid, char bit)
 		kill(pid, SIGUSR2);
 	else
 		kill(pid, SIGUSR1);
-	usleep(100);
+	usleep(1000);
 }
 
 void	send_char(int pid, char c)
@@ -49,7 +59,7 @@ int	main(int ac, char **av)
 	int		spid;
 	char	*msg;
 
-	if (ac != 3)
+	if (ac > 3)
 		return (0);
 	spid = ft_atoi(av[1]);
 	msg = av[2];

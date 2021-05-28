@@ -6,7 +6,7 @@
 #    By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/28 17:14:45 by mmehran           #+#    #+#              #
-#    Updated: 2021/05/28 17:14:45 by mmehran          ###   ########.fr        #
+#    Updated: 2021/05/29 00:07:12 by mmehran          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,32 +15,27 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 SERVER_OBJS = server_bonus.o
-CLIENT_OBJS = client_bonus.o
+CLIENT_OBJS = client_bonus.o ft_atoi.c
 OBJS = $(SERVER_OBJS) $(CLIENT_OBJS)
 
-LIBFTPATH = ../libft
 
 TARGETS = server client
 
 all: $(TARGETS)
 
 client: $(CLIENT_OBJS)
-	make -C $(LIBFTPATH)
-	$(CC) $(CFLAGS) -o $@ $^ -L $(LIBFTPATH) -lft
+	$(CC) $(CFLAGS) -o $@ $^
 
 server: $(SERVER_OBJS)
-	make -C $(LIBFTPATH)
-	$(CC) $(CFLAGS) -o $@ $^ -L $(LIBFTPATH) -lft
+	$(CC) $(CFLAGS) -o $@ $^
 
 .c.o:
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	make clean -C $(LIBFTPATH)
 	$(RM) $(OBJS)
 
 fclean: clean
-	make fclean -C $(LIBFTPATH)
 	$(RM) $(OBJS)
 	$(RM) $(TARGETS)
 

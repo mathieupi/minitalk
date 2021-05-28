@@ -6,7 +6,7 @@
 #    By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/28 17:14:08 by mmehran           #+#    #+#              #
-#    Updated: 2021/05/28 17:14:22 by mmehran          ###   ########.fr        #
+#    Updated: 2021/05/28 23:17:36 by mmehran          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ SERVER_OBJS = server.o
 CLIENT_OBJS = client.o
 OBJS = $(SERVER_OBJS) $(CLIENT_OBJS)
 
-LIBFTPATH = ./libft
 BONUSPATH = ./bonus
 
 TARGETS = server client
@@ -26,23 +25,19 @@ TARGETS = server client
 all: $(TARGETS)
 
 client: $(CLIENT_OBJS)
-	make -C $(LIBFTPATH)
-	$(CC) $(CFLAGS) -o $@ $^ -L $(LIBFTPATH) -lft
+	$(CC) $(CFLAGS) -o $@ $^
 
 server: $(SERVER_OBJS)
-	make -C $(LIBFTPATH)
-	$(CC) $(CFLAGS) -o $@ $^ -L $(LIBFTPATH) -lft
+	$(CC) $(CFLAGS) -o $@ $^
 
 .c.o:
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	make clean -C $(LIBFTPATH)
 	make clean -C $(BONUSPATH)
 	$(RM) $(OBJS)
 
 fclean: clean
-	make fclean -C $(LIBFTPATH)
 	make fclean -C $(BONUSPATH)
 	$(RM) $(OBJS)
 	$(RM) $(TARGETS)
