@@ -6,7 +6,7 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:33 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 00:57:29 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 02:12:19 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ int	main(int ac, char **av)
 	int		spid;
 	char	*msg;
 
-	if (ac > 3)
+	if (ac != 3)
+	{
+		write(2, "Bad args :/, I need the server pid, and a message\n", 51);
 		return (0);
+	}
 	spid = ft_atoi(av[1]);
 	msg = av[2];
 	send_msg(spid, msg);
