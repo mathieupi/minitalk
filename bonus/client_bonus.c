@@ -6,21 +6,11 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:40 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 00:57:25 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 02:04:15 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
-
-int	ft_atoi(const char *str)
-{
-	int	result;
-
-	result = 0;
-	while (*str >= '0' && *str <= '9')
-		result = result * 10 + *(str++) - '0';
-	return (result);
-}
 
 void	send_bit(int pid, char bit)
 {
@@ -52,6 +42,14 @@ void	send_msg(int pid, char *msg)
 		msg++;
 	}
 	send_char(pid, '\n');
+	send_char(pid, 0);
+}
+
+void	ack(int signum)
+{
+	(void) signum;
+	write(1, "Acknowledgement received from server :)\n", 41);
+	exit(0);
 }
 
 int	main(int ac, char **av)
@@ -63,5 +61,7 @@ int	main(int ac, char **av)
 		return (0);
 	spid = ft_atoi(av[1]);
 	msg = av[2];
+	signal(SIGUSR1, ack);
 	send_msg(spid, msg);
+	pause();
 }

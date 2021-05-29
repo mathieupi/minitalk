@@ -6,7 +6,7 @@
 #    By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/28 17:14:45 by mmehran           #+#    #+#              #
-#    Updated: 2021/05/29 00:57:26 by mmehran          ###   ########.fr        #
+#    Updated: 2021/05/29 02:02:02 by mmehran          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 SERVER_OBJS = server_bonus.o
-CLIENT_OBJS = client_bonus.o
+CLIENT_OBJS = client_bonus.o ft_atoi.o
 OBJS = $(SERVER_OBJS) $(CLIENT_OBJS)
 
 
