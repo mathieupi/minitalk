@@ -6,7 +6,7 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:55 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 17:52:04 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 18:25:10 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	read_char(int bit, int spid)
 {
 	static t_reading_char	reading_char = {0, 0};
 
-	reading_char.c += bit << reading_char.count;
+	reading_char.c |= bit << reading_char.count;
 	reading_char.count++;
 	if (reading_char.count == 8)
 	{

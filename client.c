@@ -6,7 +6,7 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:33 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 17:50:47 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 19:28:57 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	send_bit(int pid, char bit)
 		write(2, "Couldn't send bit :/\n", 22);
 		exit(EXIT_FAILURE);
 	}
-	usleep(19);
+	usleep(31);
 }
 
 void	send_char(int pid, char c)
