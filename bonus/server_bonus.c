@@ -6,7 +6,7 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:55 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 02:02:39 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 02:22:32 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void	ft_putnbr_fd(int n, int fd)
 	write(fd, &digit, 1);
 }
 
-void	handler(int sig, siginfo_t *siginfo, void *context)
+void	handler(int sig_number, siginfo_t *siginfo, void *context)
 {
 	(void) context;
-	if (sig == SIGUSR2)
+	if (sig_number == SIGUSR2)
 		read_char(1, siginfo->si_pid);
-	else if (sig == SIGUSR1)
+	else if (sig_number == SIGUSR1)
 		read_char(0, siginfo->si_pid);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:40 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 02:12:13 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 02:25:25 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	send_bit(int pid, char bit)
 {
+	int	sig_number;
+
+	sig_number = SIGUSR1;
 	if (bit)
-		kill(pid, SIGUSR2);
-	else
-		kill(pid, SIGUSR1);
+		sig_number = SIGUSR2;
+	if (kill(pid, sig_number) == -1)
+	{
+		write(2, "Couldn't send bit :/\n", 22);
+		exit(EXIT_FAILURE);
+	}
 	usleep(1000);
 }
 
@@ -45,11 +51,11 @@ void	send_msg(int pid, char *msg)
 	send_char(pid, 0);
 }
 
-void	ack(int signum)
+void	acknowledgement(int signum)
 {
 	(void) signum;
 	write(1, "Acknowledgement received from server :)\n", 41);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 int	main(int ac, char **av)
@@ -64,7 +70,7 @@ int	main(int ac, char **av)
 	}
 	spid = ft_atoi(av[1]);
 	msg = av[2];
-	signal(SIGUSR1, ack);
+	signal(SIGUSR1, acknowledgement);
 	send_msg(spid, msg);
 	pause();
 }

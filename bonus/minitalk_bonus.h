@@ -6,7 +6,7 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:51 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 02:02:23 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 02:26:02 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <sys/types.h>
-# include "stdlib.h"
+# include <stdlib.h>
 
 typedef struct s_reading_char
 {

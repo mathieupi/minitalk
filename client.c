@@ -6,7 +6,7 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:33 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 02:12:19 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 02:25:43 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,16 @@ int	ft_atoi(const char *str)
 
 void	send_bit(int pid, char bit)
 {
+	int	sig_number;
+
+	sig_number = SIGUSR1;
 	if (bit)
-		kill(pid, SIGUSR2);
-	else
-		kill(pid, SIGUSR1);
+		sig_number = SIGUSR2;
+	if (kill(pid, sig_number) == -1)
+	{
+		write(2, "Couldn't send bit :/\n", 22);
+		exit(EXIT_FAILURE);
+	}
 	usleep(1000);
 }
 
