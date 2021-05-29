@@ -6,7 +6,7 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:55 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 00:57:36 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 17:41:32 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ int	main(void)
 	signal(SIGUSR1, handler);
 	signal(SIGUSR2, handler);
 	while (1)
-		pause();
+	{
+	}
 }

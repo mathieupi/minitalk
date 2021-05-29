@@ -6,7 +6,7 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:55 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 02:22:32 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/05/29 17:52:04 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int	main(void)
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
-		pause();
+	{
+	}
 }
