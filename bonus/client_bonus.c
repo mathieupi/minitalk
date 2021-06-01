@@ -5,57 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/28 17:14:40 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 20:24:52 by mmehran          ###   ########.fr       */
+/*   Created: 2021/05/28 17:14:33 by mmehran           #+#    #+#             */
+/*   Updated: 2021/06/01 14:21:00 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
-void	send_bit(int pid, char bit)
+static int	g_waiting = 1;
+
+void	send_bit(int pid, char bit, int sleep_time)
 {
 	int	sig_number;
 
 	sig_number = SIGUSR1;
 	if (bit)
 		sig_number = SIGUSR2;
+	g_waiting = 1;
 	if (kill(pid, sig_number) == -1)
 	{
 		write(2, "Couldn't send bit :/\n", 22);
 		exit(EXIT_FAILURE);
 	}
-	usleep(50);
-}
-
-void	send_char(int pid, char c)
-{
-	int	i;
-
-	i = 0;
-	while (i < 8)
+	if (sleep_time)
+		usleep(sleep_time);
+	while (g_waiting && !sleep_time)
 	{
-		send_bit(pid, c & 1);
-		c >>= 1;
-		i++;
 	}
 }
 
-void	send_msg(int pid, char *msg)
+void	handler(int n)
 {
-	while (*msg)
+	g_waiting = 0;
+	if (n == SIGUSR2)
 	{
-		send_char(pid, *msg);
-		msg++;
+		write(1, "Acknowledgement received from server :)\n", 41);
+		exit(EXIT_SUCCESS);
 	}
-	send_char(pid, '\n');
-	send_char(pid, 0);
-}
-
-void	acknowledgement(int signum)
-{
-	(void) signum;
-	write(1, "Acknowledgement received from server :)\n", 41);
-	exit(EXIT_SUCCESS);
 }
 
 int	main(int ac, char **av)
@@ -68,9 +54,10 @@ int	main(int ac, char **av)
 		write(2, "Bad args :/, I need the server pid, and a message\n", 51);
 		return (0);
 	}
+	signal(SIGUSR1, handler);
+	signal(SIGUSR2, handler);
 	spid = ft_atoi(av[1]);
 	msg = av[2];
-	signal(SIGUSR1, acknowledgement);
+	send_pid(spid, getpid(), 1000);
 	send_msg(spid, msg);
-	pause();
 }

@@ -6,27 +6,11 @@
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 17:14:55 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 18:25:10 by mmehran          ###   ########.fr       */
+/*   Updated: 2021/06/01 14:20:53 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
-
-void	read_char(int bit, int spid)
-{
-	static t_reading_char	reading_char = {0, 0};
-
-	reading_char.c |= bit << reading_char.count;
-	reading_char.count++;
-	if (reading_char.count == 8)
-	{
-		if (reading_char.c == 0)
-			kill(spid, SIGUSR1);
-		write(1, &reading_char.c, 1);
-		reading_char.c = 0;
-		reading_char.count = 0;
-	}
-}
 
 void	ft_putnbr_fd(int n, int fd)
 {
@@ -48,26 +32,48 @@ void	ft_putnbr_fd(int n, int fd)
 	write(fd, &digit, 1);
 }
 
-void	handler(int sig_number, siginfo_t *siginfo, void *context)
+void	read_char(int bit)
 {
-	(void) context;
-	if (sig_number == SIGUSR2)
-		read_char(1, siginfo->si_pid);
-	else if (sig_number == SIGUSR1)
-		read_char(0, siginfo->si_pid);
+	static t_reading_char	reading_char = {0, 0, 0, 0};
+
+	reading_char.c |= bit << reading_char.count;
+	reading_char.count++;
+	if (reading_char.count == 8)
+	{
+		if (reading_char.c == '\0' && reading_char.pid)
+		{
+			kill(reading_char.pid, SIGUSR2);
+			reading_char.pid = 0;
+			reading_char.tpid = 0;
+		}
+		if (reading_char.c == '\0' && !reading_char.pid)
+			reading_char.pid = reading_char.tpid;
+		if (reading_char.pid && reading_char.c != '\0')
+			write(1, &reading_char.c, 1);
+		else if (reading_char.c != '\0')
+			reading_char.tpid = reading_char.tpid * 10 + reading_char.c - '0';
+		reading_char.count = 0;
+		reading_char.c = 0;
+	}
+	if (reading_char.pid)
+		kill(reading_char.pid, SIGUSR1);
+}
+
+void	handler(int signal_number)
+{
+	if (signal_number == SIGUSR2)
+		read_char(1);
+	else if (signal_number == SIGUSR1)
+		read_char(0);
 }
 
 int	main(void)
 {
-	struct sigaction	sa;
-
-	sa.sa_flags = SA_SIGINFO;
-	sa.sa_sigaction = handler;
 	write(1, "my pid: ", 8);
 	ft_putnbr_fd(getpid(), 1);
 	write(1, "\n", 1);
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	signal(SIGUSR1, handler);
+	signal(SIGUSR2, handler);
 	while (1)
 	{
 	}

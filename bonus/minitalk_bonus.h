@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmehran <mmehran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/28 17:14:51 by mmehran           #+#    #+#             */
-/*   Updated: 2021/05/29 02:26:02 by mmehran          ###   ########.fr       */
+/*   Created: 2021/05/28 17:14:13 by mmehran           #+#    #+#             */
+/*   Updated: 2021/06/01 14:20:55 by mmehran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@ typedef struct s_reading_char
 {
 	char	c;
 	int		count;
+	int		tpid;
+	int		pid;
 }		t_reading_char;
 
-int	ft_atoi(const char *str);
+char	*ft_itoa(int n);
+int		ft_atoi(const char *str);
+
+void	send_char(int pid, char c, int sleep_time);
+void	send_msg(int pid, char *msg);
+void	send_pid(int pid, int my_pid, int sleep_time);
+void	send_bit(int pid, char bit, int sleep_time);
 
 #endif
